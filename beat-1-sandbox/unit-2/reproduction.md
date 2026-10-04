@@ -25,14 +25,38 @@ zami116
 
 [https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-5975000745](https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-5975000745)
 
+Hi! I'd like to pick this up as a first contribution.
+
+From the description, this looks like a test-fixture bug rather than a parser bug: `test_extract_heading_hierarchy`'s content is indented by eight spaces, which Markdown treats as a code block, so `_extract_heading_hierarchy` correctly finds no headings there and the test fails against correct parser behavior. I'll confirm this locally, then remove the extra indentation and drop the `@pytest.mark.xfail` marker (manifest id H-04) as part of the fix, per the contributing guide's note on seeded bugs.
+
+I'll follow up with my environment and the exact reproduction output once I've confirmed it.
+
+I used Claude to help with research along the way; the investigation and fix are my own.
+
 **Reproduction comment**
 
-[Link to the comment where you posted your reproduction. It must record the environment
-(OS, relevant versions, code state), steps a stranger could follow, and what you observed.
-**Then paste the text of that comment underneath the link** — the pasted text is what this
-field is graded on, so copy across what you actually posted.]
+[https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-5975313005](https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-5975313005)
 
-## Eval iterations
+Reproduction confirmed.
+
+Environment: Python 3.13.14, pytest 9.1.1, Windows (win32), repo cloned at commit 99673c7, installed with `pip install -e .` (no extra dependency group needed).
+
+Steps:
+
+```bash
+pytest tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy -v -rx
+```
+
+Observed: the test is marked `xfail(strict=True)` and fails as expected —
+
+```bash
+XFAIL tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy - issue #71 (manifest H-04): heading hierarchy fixture is indented, so it has no headings
+1 xfailed in 0.20s
+```
+
+I confirmed the stated cause directly in the fixture source, not just via the xfail label: in `test_extract_heading_hierarchy`, the `markdown` variable's lines are indented 8 spaces (inherited from the method body's nesting), e.g. `        # Main Title`. Markdown treats 4+ spaces of indentation as a code block, so `_extract_heading_hierarchy` correctly finds no headings in this fixture — the parser is behaving correctly; the test fixture is the bug.
+
+Fix should be: dedent the `markdown` string in `test_extract_heading_hierarchy` (e.g. with `textwrap.dedent` or by removing the leading indentation), then drop the `@pytest.mark.xfail` marker per the contributing guide's note on seeded bugs.
 
 ## Eval iterations
 
