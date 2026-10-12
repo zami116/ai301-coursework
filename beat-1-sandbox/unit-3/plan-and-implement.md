@@ -15,17 +15,17 @@ label is not graded.
 
 **GitHub username**
 
-[Your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comment upstream is identified by this name, and it is
-the only thing that ties it to you. Several students may plan the same
-house issue, so this is what keeps their comments off your score and
-yours off theirs.]
+zami116
 
 **Plan comment**
 
-[Link to the comment where you posted your plan on the issue. Use the comment's own
-permalink. **Then paste the text of that comment underneath the link** — the pasted text is
-what this field is graded on, so copy across what you actually posted.]
+[PASTE YOUR PLAN COMMENT'S PERMALINK HERE — I don't have the actual link, only the text I drafted for you. Grab it from the issue page the same way you did for the claim and repro comments.]
+
+Plan: the fixture in `test_extract_heading_hierarchy` is indented 8 spaces (inherited from the method body), which Markdown treats as a code block — that's why `_extract_heading_hierarchy` finds no headings, confirmed in my reproduction above. I'll dedent the fixture string and drop the `@pytest.mark.xfail` marker (manifest H-04), per the contributing guide's note that removing the marker is part of fixing a seeded bug. Test plan is re-running the same pytest command from my reproduction comment and confirming it moves from `xfail` to a clean pass, plus the full file's suite staying green.
+
+One open question I haven't resolved yet: whether the dedented fixture needs any structural change beyond whitespace to satisfy all three assertion levels (1, 2, 3) — I'll find out once I run it and will say so here if it does.
+
+I used Claude to help with research and drafting along the way; the plan and the change will be my own work that I understand and can explain.
 
 ---
 
@@ -33,47 +33,74 @@ what this field is graded on, so copy across what you actually posted.]
 
 **Branch**
 
-[The name of the branch you built the change on, exactly as it appears in your fork. The
-naming shape is a type prefix, then the issue number, then a short description. **The issue
-number in the branch name must be the number of the issue you claimed** — a name carrying
-any other number does not satisfy this field.]
+[PASTE YOUR ACTUAL BRANCH NAME — should be something like fix/71-dedent-heading-fixture. Confirm it carries #71, not any other number.]
 
 **Evidence**
 
-[Your Unit 2 reproduction steps re-run against the built change: the before, then the
-after. Paste both, including the commands you ran and their output.]
+Before (Unit 2 reproduction, commit `99673c7`):
+$ pytest tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy -v -rx
+...
+XFAIL tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy - issue #71 (manifest H-04): heading hierarchy fixture is indented, so it has no headings
+1 xfailed in 0.20s
+
+
+Full-file baseline (before):
+
+$ pytest tests/unit/test_readme_parser.py -v
+...
+13 passed, 2 xfailed in 0.33s
+
+
+After (fix built on this branch):
+
+$ pytest tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy -v
+...
+tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy PASSED [100%]
+1 passed in 0.15s
+
+
+Full-file result (after):
+
+$ pytest tests/unit/test_readme_parser.py -v
+...
+tests/unit/test_readme_parser.py::TestReadmeParser::test_parse_standard_readme XFAIL (issue #70 (manifest H-03): README parser fixture is i...) [ 6%]
+...
+tests/unit/test_readme_parser.py::TestReadmeParser::test_extract_heading_hierarchy PASSED [ 66%]
+...
+14 passed, 1 xfailed in 0.30s
+
+
+`test_parse_standard_readme`'s separate #70/H-03 xfail marker is untouched and still correctly reports `XFAIL`, confirming the fix stayed within its stated scope.
+
+---
 
 ## Eval iterations
 
-Answer all four sections. Quote source text directly; paraphrase does not satisfy these
-fields.
-
 **Run history**
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+Run 1: 18/20 (bar met) — Run 2 (--only, revised `unknowns-honest` and `executable-by-a-stranger`): 4/4 agreed, canaries held — Run 3 (full confirming run): 20/20 (bar met, PASS — this is the run committed to `eval-run.txt`)
 
 **Package analysis**
 
-[Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
-scored). Name it by id, say what your rubric decided and what the gold label said, and
-explain why your rubric read it that way.]
+pkg-14: my rubric's verdict was reject on the first full run (failed `executable-by-a-stranger`); gold label is accept. The plan states that "exact functions to be pinned in the PR after tracing the query issuance with debug logs, which I have working" — my original check's fail condition treated any plan that didn't name an exact function upfront as assuming unstated context. But this plan actually states specific, traced context (the mechanism, the subsystem, evidence already gathered via `zellij --debug`) and is honestly deferring only the final function names to a stated next step, not failing to think it through. I revised the check to allow a plan to identify the subsystem/mechanism precisely and defer exact naming to a stated, evidenced next step, which flipped this package to accept while still failing a plan that names no subsystem or mechanism at all.
 
 **Check rationale**
 
-[Quote one check from the `rubric.md` you uploaded to `tools/plan-check/`, exactly as it reads now.
-Then say why it reads that way — what you revised to get there, or what you rejected in
-favour of it.]
+`unknowns-honest`, as currently written in `rubric.md`:
+
+> Pass if the plan states genuine open questions or risks it hasn't resolved, OR explicitly identifies a specific, bounded cost/trade-off of the approach even if that cost is small or already well-understood (e.g., "one extra request per day, which is the constant's existing purpose"). Fail if the plan has no risks/unknowns section at all, or one that's boilerplate/generic ("risk: might not work") without naming anything specific to this change — including a specific, small, already-understood cost in that specificity bar.
+
+My first draft only accepted a plan if it named an unresolved question — which incorrectly failed pkg-05, a plan whose diagnosis was precise enough that its only real "risk" was a small, already-understood cost (one extra network request per day), not an open question. I revised the check to accept either an open unknown or a specifically-named small cost, rather than requiring the plan to manufacture uncertainty it genuinely didn't have.
 
 **Trade-offs**
 
-[Every check gives something up. Any one of these is a complete answer: a package whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
+Accepting a specifically-named small cost as satisfying this check means a plan with genuine uncertainty and a plan with a trivial, fully-understood cost both pass the same way — the verdict doesn't distinguish "nothing left to worry about" from "here's a real open question I haven't resolved." I accept this: the alternative (requiring every plan to state an unresolved question) would have penalized well-grounded, low-risk plans for not inventing doubt, which is a worse failure mode than slightly blurring two different kinds of honesty. I re-ran pkg-06 (scope-creep) and pkg-10 (unbuildable) as canaries after this change to confirm it didn't loosen anything in checks this revision didn't target, and both still correctly rejected.
 
 ---
+
+Related paths: `plan.md` and `eval-run.txt` in this directory; your skill's files in
+`tools/plan-check/`.
+
 
 Related paths: `plan.md` and `eval-run.txt` in this directory; your skill's files in
 `tools/plan-check/`.
