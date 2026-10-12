@@ -19,7 +19,7 @@ zami116
 
 **Plan comment**
 
-[PASTE YOUR PLAN COMMENT'S PERMALINK HERE — I don't have the actual link, only the text I drafted for you. Grab it from the issue page the same way you did for the claim and repro comments.]
+[https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-6115885574](https://github.com/codepath/pathreview-ai301-fa26-howard/issues/71#issuecomment-6115885574)
 
 Plan: the fixture in `test_extract_heading_hierarchy` is indented 8 spaces (inherited from the method body), which Markdown treats as a code block — that's why `_extract_heading_hierarchy` finds no headings, confirmed in my reproduction above. I'll dedent the fixture string and drop the `@pytest.mark.xfail` marker (manifest H-04), per the contributing guide's note that removing the marker is part of fixing a seeded bug. Test plan is re-running the same pytest command from my reproduction comment and confirming it moves from `xfail` to a clean pass, plus the full file's suite staying green.
 
@@ -33,7 +33,7 @@ I used Claude to help with research and drafting along the way; the plan and the
 
 **Branch**
 
-[PASTE YOUR ACTUAL BRANCH NAME — should be something like fix/71-dedent-heading-fixture. Confirm it carries #71, not any other number.]
+fix/71-dedent-heading-fixture
 
 **Evidence**
 
