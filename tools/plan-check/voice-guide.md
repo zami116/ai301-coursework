@@ -1,34 +1,63 @@
 # Voice guide: how I talk upstream
 
 <!--
-THIS IS A CARRY-OVER SLOT, not a new hole. You wrote this guide in
-week 2; paste your filled week-2 voice-guide.md here, whole. It is not
-re-authored and it is not graded as new work this week.
+THIS IS THE PART YOU WRITE (new this week). Live mode reads this file
+before any comment of yours goes out the door; eval mode ignores it
+entirely, because your voice is yours and carries no gold labels.
 
-Then reread it with the plan comment in mind. Your claim and repro
-comments promised and reported; a plan comment commits you to an
-approach in front of the people who maintain the code. If your rules
-do not cover that register (for example: how you state an approach you
-are not certain of, or how you respond when a maintainer already
-suggested a direction), extend the guide with what it needs. Extending
-is allowed and encouraged; starting over is not required.
+This is not etiquette. "Be polite and concise" is advice for everyone
+and therefore rules for no one. Write rules YOU need, in your own
+words, each one concrete enough that the skill can hold a draft
+against it and say which rule it breaks.
 
-Live mode reads this file before your plan comment goes out and
-reports any rule your draft breaks. Eval mode ignores it entirely,
-because your voice is yours and carries no gold labels.
+Three sections. Fill all three.
 -->
 
 ## Who I am in threads
 
-<!-- Paste your week-2 section here. -->
+I'm a CS student working through this issue as part of a course assignment, making my first real open-source contribution. I'm here to investigate and report back honestly — not to promise a fix, a timeline, or a merge. Readers should expect a specific, evidenced account of what I found, including if I couldn't reproduce something.
 
 ## Rules I write by
 
-<!-- Paste your week-2 rules here, wrong/right pairs and all. Add any
-rule the plan-comment register needs that your week-2 comments did
-not. -->
+### Rule: Promise investigation, not outcomes
+
+I can commit to looking into something. I cannot commit to fixing it, how long it'll take, or that my fix will be accepted — those depend on things I don't control yet (what I find, maintainer review, scope creep).
+
+- Wrong: "I will fix it within 2 days guaranteed."
+- Right: "I'd like to investigate this. I'll report back what I find."
+
+### Rule: Say something only this issue could prompt
+
+If a comment could be pasted onto any issue in any repo unchanged, it says nothing. Every comment should reference something specific — the exact symptom, a line from the thread, a file I looked at.
+
+- Wrong: "Great project, I love using this every day! This issue looks like a good one for me."
+- Right: "I can reproduce the missing Content-Type header on 3.2.4 with exactly one custom header (repro below)."
+
+### Rule: Match my claim to my evidence, not my hope
+
+If I reproduced it, I say so and point to the exact output that shows it. If I couldn't, I say that plainly and show what I actually tried — a real cannot-reproduce is useful; a confident guess dressed as a result is not.
+
+- Wrong: "Yep, this is definitely broken, I can see why."
+- Right: "I could not reproduce this on Linux + zsh with the report's exact steps; here's what differed from the original environment."
+
+### Rule: Don't ask for exclusivity I haven't earned
+
+Asking a maintainer to "reserve" or "assign" an issue to me before I've shown any real work on it asks for trust up front instead of earning it.
+
+- Wrong: "Kindly assign it to me and keep this issue reserved for me."
+- Right: "I'd like to take this on — here's what I've found so far investigating it."
+
+### Rule: Disclose AI assistance when the repo asks for it
+
+If a repo's contribution policy requires stating AI tool use, that goes in the comment plainly, not left out because the rest of the comment already sounds like me.
+
+- Wrong: (silently omitting it because "the writing sounds human enough")
+- Right: "I used Claude to help draft this report; the investigation and conclusions are my own."
 
 ## Things I never post
 
-<!-- Paste your week-2 list here; extend it if planning tempts you
-toward new ones (overpromised timelines are the classic). -->
+- A guaranteed fix or a completion date
+- Flattery or filler that isn't about the actual issue ("great project!", "love this repo!")
+- A request to be assigned or have the issue "reserved" before I've shown real investigation
+- A claim of reproduction without showing the exact output that demonstrates it
+- An omitted AI-disclosure statement when the repo's policy requires one
