@@ -30,10 +30,4 @@ else in the rubric applies as written.
 
 ## Your fit profile
 
-<!-- YOU write this part: a few sentences about you. What languages and
-tools you have actually used, what you want to get better at, anything
-you want to avoid. The skill uses this only to RANK the issues your
-rubric accepts, never to change a verdict: fit cannot rescue an issue
-your rubric rejects, and cannot sink one it accepts. -->
-
-(Write a few sentences here.)
+I've used Python most recently: I fixed a pytest fixture bug in Path Review (PR #82), I've built a multi-threaded chat server, and I've worked with an AI agent notebook. I've also done web development using languages like JavaScript and React. I want to get better at testing, backend code, and AI/agent projects. I prefer small, well-described bug fixes, test fixes, and docs corrections that I can reproduce on my own Windows machine. I want to avoid issues that need Docker (it isn't installed on my machine), database or infrastructure setup, and big refactors or new features.
