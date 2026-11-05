@@ -1,4 +1,4 @@
-# Contribution: [Issue Title]
+# Contribution: Music : Add a boom bap drum pattern
 
 Path: `beat-2-contribution/contribution-story.md`
 
@@ -8,10 +8,9 @@ format criteria grade exactly that. Your course repo link is the whole submissio
 files and no evidence uploads are part of Assignment 5.
 
 **Contribution Number:** [1]
-**Student:** [Student name]
-**GitHub Username:** [your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comments upstream are identified by this name.]
-**Issue:** [GitHub issue link]
+**Student:** Zamijah Shakeur-Tompkins
+**GitHub Username:** zami116
+**Issue:** https://github.com/Babali42/DrumBeatRepo/issues/537
 **Pull Request:** [GitHub PR link, once opened]
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -55,10 +54,9 @@ happened; these entries are the toolkit's own timeline.
 All four entries are graded. Keep every heading below, and fill each
 one in the week it belongs to.
 
-**Unit 5: [one line on the tool work]**
+**Unit 9: Turned issue-select into issue-scout and tested it on real repos**
 
-[2-4 sentences: what you built (the scout, your strategy), what broke
-or fell short, what changed because of it.]
+I built issue-scout from my unit 5 skill by adding a fit profile and a search strategy with four gh queries and ranking filters. My first scan rejected all five candidates on Maintainer alive, and I planned to widen my 14-day window, but regrading #75 showed the real cause: the scout's comment listing was cut off at 15 comments and hid two collaborator replies. A later grade also called a claim "within 6 months" when it was about 15 months old, so I now read every evidence line before touching the rubric, which I left unchanged. My queries were pinned to the Path Review repo, so I took candidates from the Issue Selection site and graded them, and the scout accepted DrumBeatRepo #537, which I claimed.
 
 **Unit 6: [one line on the tool work]**
 
