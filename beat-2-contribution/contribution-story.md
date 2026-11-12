@@ -58,11 +58,9 @@ one in the week it belongs to.
 
 I built issue-scout from my unit 5 skill by adding a fit profile and a search strategy with four gh queries and ranking filters. My first scan rejected all five candidates on Maintainer alive, and I planned to widen my 14-day window, but regrading #75 showed the real cause: the scout's comment listing was cut off at 15 comments and hid two collaborator replies. A later grade also called a claim "within 6 months" when it was about 15 months old, so I now read every evidence line before touching the rubric, which I left unchanged. My queries were pinned to the Path Review repo, so I took candidates from the Issue Selection site and graded them, and the scout accepted DrumBeatRepo #537, which I claimed.
 
-**Unit 6: [one line on the tool work]**
+**Unit 10: Installed the voice guard and patched my scout's scope check**
 
-[2-4 sentences: the voice-guard, the repo-memory file. What broke or
-fell short, and what changed because of it. "Nothing broke" counts when
-it is true - say how you know.]
+I added Upstream rules for claims, questions and pings to my voice guide, written from what happened on #537, and installed the guard hook. My first wiring test failed: `gh issue comment --help` ran instead of being stopped, and the guard log had no hook lines. The hook only watched Bash, but Claude Code on Windows can run commands through a PowerShell tool, so I widened the matcher in settings.json and the check in check_voice.py (with Claude Code's help, and I diffed it against the course copy). The same test now stops with "no body the guard can read," and I run the manual check on drafts I post from the browser. I also wrote CLAUDE.local.md for the DrumBeatRepo clone.
 
 **Unit 7: [one line on the tool work]**
 
@@ -78,24 +76,18 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs in your own words: how you searched, what your scan
-surfaced, what your scout's verdict said, why this issue fits your
-profile, and what you hope to learn. If your scout's verdict on it
-was reject and you chose it anyway, say so here and say why; choosing
-against your own tool silently is what loses points. Close with an
-honest read of the tool itself: where the scout fell short on a real
-wild search and what you changed or would change, or what convinced
-you it held up. **Record the link to your claim comment in this section too.**
-Not claimed yet? Write `claim pending` and today's date where the link goes,
-and add the link the moment your claim lands.]
+I started with my scout on the Path Review repo: four queries returned 51 open issues, 35 survived my filters, and all five top candidates were rejected on Maintainer alive. When I regraded #75, I found the scout's comment listing had been cut off at 15 comments and hid two collaborator replies, so those rejects were unreliable. Because my queries were pinned to one classroom repo, I took candidates from the Issue Selection site instead and graded nine issues across Altinn, MaterialX, WebDevTools, dialogporten and DrumBeatRepo. Three were accepted: Altinn #12123 and DrumBeatRepo #537 and #270. I rejected #12123 for my own reasons: Altinn Studio's README lists Docker Desktop as a prerequisite and I don't have Docker, which my rubric can't see. #270 is a standing contribution guide that isn't meant to be closed, so it wasn't a single task.
+
+I chose #537 (add a boom bap beat to DrumBeatRepo). The scout accepted it on 2026-11-03 with a moderate difficulty note: one beat file plus a metadata entry, no Docker, and it runs in a Codespace. The closed PR #557 showed me what was missing (the beat file, not just the metadata), and Babali42 answered my claim within hours with a step-by-step workflow. After I claimed, a regrade rejected it, but only on Unclaimed, because the scout counted my own claim comment as a live claim; I chose it anyway and I can explain why. It's a weak fit for my profile (the scout called it "not Python, testing or backend work"), but it is a bounded, reproducible task with a responsive maintainer. I hope to learn how a maintainer wants a contribution shaped and his DAW-to-JSON workflow for beats. Music design and production is one of my many interests, and this issue will allow me to experience the work that goes behind some music applications for when I start creating my own. Claim comment: [https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869](https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869) (posted 11/3/2026).
+
+My honest read of the scout: it held up on maintainer, repo and scope evidence, but it fell short three times on real repos. It truncated comments, it misdated a claim by about 15 months, and it can't tell my own claim from a stranger's. It also never checks setup cost like Docker, so I now read each evidence line and check setup by hand before choosing.
 
 **Toolkit**
 
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout, with my four-query strategy and my rubric, plus manual pre-screening of candidates
+- What it produced: a scan of Path Review (51 found, 35 after filters), graded read-outs for nine site picks, and an accept on #537 with a "moderate" note after my scope patch
+- Difficulties: truncated comment lists, a date misread on #12000, queries pinned to one repo, no check for setup cost (Docker), and #537 rejected on regrade because it counted my own claim
+- What changed: I replaced my Scope fits you check with the staff scope-feasible row and added the difficulty note, logged in scan-notes.md. I left Unclaimed as is.
 
 ---
 
@@ -130,31 +122,27 @@ and add the link the moment your claim lands.]
 
 **Environment Setup**
 
-[What a stranger would need to stand this up: your operating system,
-the relevant versions (language, runtime, package manager, the project
-itself), and how you set the project up. Then the challenges you faced
-and how you solved them, or that none came up.]
+Windows 11, Edge 157. I ran the app in a GitHub Codespace on my fork (zami116/DrumBeatRepo), branch main, commit e1da92a, Node v24.22.1. I forked Babali42/DrumBeatRepo, synced main, then used Code, Codespaces, Create codespace on main. The dev server started on its own and forwarded port 4200. Challenges: the Ports tab was empty at first and I thought I needed to start the server myself, but it came up on its own once the build finished.
 
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Fork Babali42/DrumBeatRepo, sync main, and create a Codespace on main.
+2. Open the forwarded app on port 4200.
+3. Choose "Hip-Hop" in the genre dropdown and open the beat dropdown.
+4. Observed: the list shows only "Hip-Hop: double kick offset", "Trap" and "Jul type beat". There is no Boom Bap.
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
-- **Screenshots/logs:** [if applicable]
-- **My findings:** [what you discovered during reproduction; an
-  honest, evidenced cannot-reproduce that led you to re-pick or ask
-  the maintainer belongs here and costs you nothing]
+- **Commit showing reproduction:** none
+- **Screenshots/logs:** `ls frontend/src/assets/beats/hip-hop` at e1da92a: hiphop.json, jul.json, trap.json. `git ls-files | grep -i boom`: no output. `grep -c -i boom frontend/src/assets/beats/beats-metadata.json`: 0.
+- **My findings:** Boom Bap is missing, as the issue says. It needs both a beat file in hip-hop/ and an entry in beats-metadata.json, which matches Babali42's note on #557 that a metadata entry alone would not work. Upstream main is 3 commits ahead (a jazz beat) and still has no Boom Bap. Reproduction is done and I'm starting on his workflow: listen to the existing samples, then sketch the pattern in LMMS.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: repro-check, run on my claim draft and my repro report
+- What it produced: a reject at first, on behavior-matches only, because my screenshots were linked by local file paths a stranger can't open. After I replaced them with command output it accepted, with all five checks passing, and it verified my commit and the hip-hop folder against the live repo.
+- Difficulties: its suggested fix assumed I would post the report on the issue, but my assignment says the PR carries the proof.
+- What changed: screenshots became ls and grep output, I wrote full paths, and I added a line tying the report to the maintainer's workflow.
 
 ---
 
