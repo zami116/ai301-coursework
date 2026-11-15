@@ -153,7 +153,7 @@ Windows 11, Edge 157. I ran the app in a GitHub Codespace on my fork (zami116/Dr
 
 **Analysis**
 
-The beat list comes from beats-metadata.json. BeatLibrary.load (engine/src/main/scala/com/drumbeatrepo/library/BeatLibrary.scala) fetches /assets/beats/beats-metadata.json, and BeatLibrary.parseManifest decodes it into List[BeatMetadata] (genre, label, filename). When a beat is selected, HttpBeatLoader (engine/src/main/scala/com/drumbeatrepo/sequencer/HttpBeatLoader.scala) fetches /assets/beats/<filename>.json. Boom Bap is missing because there is no registry entry, so it never appears in the dropdown, and no boom-bap.json exists for a selection to load.
+The Hip-Hop dropdown shows only three beats because beats-metadata.json has no entry for Boom Bap, and no boom-bap.json exists for a selection to load. BeatLibrary.load (engine/src/main/scala/com/drumbeatrepo/library/BeatLibrary.scala) fetches /assets/beats/beats-metadata.json, and parseManifest decodes it into List[BeatMetadata] (genre, label, filename). HttpBeatLoader (engine/src/main/scala/com/drumbeatrepo/sequencer/HttpBeatLoader.scala) fetches /assets/beats/<filename>.json when a beat is selected. At commit e1da92a, ls frontend/src/assets/beats/hip-hop lists only hiphop.json, jul.json and trap.json.
 
 **Proposed Solution**
 
@@ -164,14 +164,24 @@ Add one beat file and one registry entry. I am not changing any Scala or TypeScr
 1. Reuse the existing sounds (techno/hat.wav, techno/snare.wav, techno/kick.wav); add no new audio files.
 2. Add frontend/src/assets/beats/hip-hop/boom-bap.json, shaped like hiphop.json: 88 bpm, 16 steps, hats, snare and kick.
 3. Add {"filename": "hip-hop/boom-bap", "genre": "Hip-Hop", "label": "Boom Bap"} to frontend/src/assets/beats/beats-metadata.json.
-4. Reload the app and check that Boom Bap appears, plays, and every other genre still lists its beats.
-5. Run the repo's tests: npx ng test --watch=false and npm run test-vitest in frontend/.
+4. Run the app and the tests as described under Test plan.
+
+**Test plan**
+
+Re-run my reproduction steps on the branch. Before (e1da92a): with Genre Hip-Hop selected, the beat dropdown lists three beats, ls frontend/src/assets/beats/hip-hop shows three files, and grep -c -i boom on beats-metadata.json prints 0. Expected after: the dropdown lists Boom Bap as a fourth beat, selecting it loads 88 bpm and plays, switching to Trap and back still works, ls shows boom-bap.json, and the grep prints 2 (the filename and label lines). Then run the repo's tests in frontend/: npx ng test --watch=false should print Executed 92 of 92 SUCCESS, and npm run test-vitest should pass 5 files and 29 tests.
+
+**Risks and unknowns**
+
+- Loudness: the app has no mixer, and I only checked that the reused techno samples play, not how they sound next to the other hip-hop beats.
+- The maintainer suggested exporting new one-shot samples; I don't know yet whether reusing existing ones is acceptable to him.
+- The pattern starts from a tutorial's layout, and he asked for music made by me; I don't know whether my changes (busier hats, an extra kick) are enough for him.
+- I have not tested what a malformed registry entry would do to the other genres, only that mine loads and the others still appear.
 
 **Deviations**
 
-- Planned to add my own sounds; I reused the repo's existing samples, because the maintainer's loudness advice needs LMMS exports that I did not get to in time, and I'm happy to export new one-shots if he prefers.
+- Planned to add my own sounds; I reused the repo's existing samples.
 - Planned sbt testFull for the engine; not run, since I changed no Scala code and no engine test reads beats-metadata.json.
-- My first draft of boom-bap.json had bpm 0, so the beat never applied and the grid showed the previous beat; setting 88 fixed it.
+- My first boom-bap.json had bpm 0, so the beat never applied and the grid showed the previous beat; setting 88 fixed it.
 
 **Toolkit**
 
