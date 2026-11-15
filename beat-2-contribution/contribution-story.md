@@ -95,26 +95,29 @@ My honest read of the scout: it held up on maintainer, repo and scope evidence, 
 
 **Problem Description**
 
-[In your own words, what is broken or missing?]
+DrumBeatRepo has no boom bap beat. Issue #537 asks for one, and the maintainer wants more hip-hop and rap beats. Beats in this app are data, not code: each is a JSON file plus an entry in a registry file, and the app only lists what the registry names.
 
 **Expected Behavior**
 
-[What should happen?]
+Choosing "Hip-Hop" and opening the beat dropdown should list a Boom Bap option. Selecting it should load a boom bap pattern (its BPM, tracks and steps) that plays with samples at a loudness that fits the other beats, since the app has no mixer.
 
 **Current Behavior**
 
-[What actually happens?]
+The dropdown lists only "Hip-Hop: double kick offset," "Trap" and "Jul type beat." There is no boom-bap.json in the hip-hop folder and no boom bap entry in beats-metadata.json. An earlier PR (#557) added only a metadata entry, and the maintainer pointed out it wouldn't work because the beat file didn't exist.
 
 **Affected Components**
 
-[Which parts of the codebase are involved?]
+- frontend/src/assets/beats/hip-hop/: a new boom-bap.json beside hiphop.json, jul.json and trap.json
+- frontend/src/assets/beats/beats-metadata.json: a new entry with filename "hip-hop/boom-bap", genre "Hip-Hop" and a label
+- frontend/src/assets/samples/: new or reused one-shot samples for the pattern
+- engine/.../BeatMetadata.scala and its spec BeatMetadataCirceSpec.scala read the metadata [confirm from your orientation run whether the frontend loads beats through the engine]
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: issue-scout's read-out on #537 (difficulty note: moderate), plus my own reading of the thread, PR #557 and the maintainer's workflow comment
+- What it produced: the scout described the work as one beat JSON plus a metadata entry with no code changes, and rated it moderate
+- Difficulties: the scout only reads the issue text, so it missed that the real work includes making and exporting audio samples, which Babali42 described later in the thread
+- What changed: I rewrote the scope in my own words as beat file, metadata entry and samples, and added the loudness requirement to Expected Behavior
 
 ---
 
