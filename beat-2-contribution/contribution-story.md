@@ -62,12 +62,12 @@ I built issue-scout from my unit 5 skill by adding a fit profile and a search st
 
 I added Upstream rules for claims, questions and pings to my voice guide, written from what happened on #537, and installed the guard hook. My first wiring test failed: `gh issue comment --help` ran instead of being stopped, and the guard log had no hook lines. The hook only watched Bash, but Claude Code on Windows can run commands through a PowerShell tool, so I widened the matcher in settings.json and the check in check_voice.py (with Claude Code's help, and I diffed it against the course copy). The same test now stops with "no body the guard can read," and I run the manual check on drafts I post from the browser. I also wrote CLAUDE.local.md for the DrumBeatRepo clone.
 
-**Unit 7: [one line on the tool work]**
+**Unit 11: [one line on the tool work]**
 
 [2-4 sentences: the ship-gate and your gate manifest. What it produced
 on your real branch, what fought you, what changed because of it.]
 
-**Unit 8: [one line on the tool work]**
+**Unit 12: [one line on the tool work]**
 
 [2-4 sentences: the PR-monitor and your playbook. What it read, what it
 drafted, what you did with the draft.]
@@ -85,7 +85,7 @@ My honest read of the scout: it held up on maintainer, repo and scope evidence, 
 **Toolkit**
 
 - Tool: issue-scout, with my four-query strategy and my rubric, plus manual pre-screening of candidates
-- What it produced: a scan of Path Review (51 found, 35 after filters), graded read-outs for nine site picks, and an accept on #537 with a "moderate" note after my scope patch
+- What it produced: a scan of Path Review (51 found, 35 after filters), graded read-outs for nine site picks, and an accept on #537 on 11-03, then after the scope patch a reject on Unclaimed only (my own claim) with a “moderate” note
 - Difficulties: truncated comment lists, a date misread on #12000, queries pinned to one repo, no check for setup cost (Docker), and #537 rejected on regrade because it counted my own claim
 - What changed: I replaced my Scope fits you check with the staff scope-feasible row and added the difficulty note, logged in scan-notes.md. I left Unclaimed as is.
 
@@ -109,8 +109,8 @@ The dropdown lists only "Hip-Hop: double kick offset," "Trap" and "Jul type beat
 
 - frontend/src/assets/beats/hip-hop/: a new boom-bap.json beside hiphop.json, jul.json and trap.json
 - frontend/src/assets/beats/beats-metadata.json: a new entry with filename "hip-hop/boom-bap", genre "Hip-Hop" and a label
-- frontend/src/assets/samples/: new or reused one-shot samples for the pattern
-- engine/.../BeatMetadata.scala and its spec BeatMetadataCirceSpec.scala read the metadata [confirm from your orientation run whether the frontend loads beats through the engine]
+- frontend/src/assets/sounds/: new or reused one-shot samples for the pattern
+- engine: BeatLibrary.scala loads the registry and HttpBeatLoader.scala loads each beat file; no engine code changes needed.
 
 **Toolkit**
 
@@ -153,29 +153,29 @@ Windows 11, Edge 157. I ran the app in a GitHub Codespace on my fork (zami116/Dr
 
 **Analysis**
 
-[Your analysis of the root cause: what is causing the issue, traced
-to the files and functions involved.]
+The beat list comes from beats-metadata.json. BeatLibrary.load (engine/src/main/scala/com/drumbeatrepo/library/BeatLibrary.scala) fetches /assets/beats/beats-metadata.json, and BeatLibrary.parseManifest decodes it into List[BeatMetadata] (genre, label, filename). When a beat is selected, HttpBeatLoader (engine/src/main/scala/com/drumbeatrepo/sequencer/HttpBeatLoader.scala) fetches /assets/beats/<filename>.json. Boom Bap is missing because there is no registry entry, so it never appears in the dropdown, and no boom-bap.json exists for a selection to load.
 
 **Proposed Solution**
 
-[High-level description of your fix approach, and what you are
-deliberately NOT changing.]
+Add one beat file and one registry entry, with sounds. I am not changing any Scala or TypeScript code. The pattern and sounds are my own work, as the maintainer asked.
 
 **Implementation Plan**
 
-1. [Modify file X to do Y]
-2. [Add or change Z]
-3. [Update tests]
+1. Add sounds for the pattern under frontend/src/assets/sounds/, or reuse existing ones.
+2. Add frontend/src/assets/beats/hip-hop/boom-bap.json, shaped like hiphop.json.
+3. Add {"filename": "hip-hop/boom-bap", "genre": "Hip-Hop", "label": "Boom Bap"} to frontend/src/assets/beats/beats-metadata.json.
+4. Reload the app and check that Boom Bap appears, plays, and every other genre still lists its beats.
+5. Run the repo's tests: npm run test and npm run test-vitest in frontend/, sbt testFull in engine/.
 
 [Record deviations here as they happen: what changed mid-build and
 why. A recorded deviation is honest work; silent drift is not.]
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: Claude (chat) and git grep, to trace how a beat gets from the JSON files to the dropdown
+- What it produced: the path from BeatLibrary.load to HttpBeatLoader, which showed that the filename in the registry becomes the path of the beat file
+- Difficulties: my first greps ran from the wrong folder and returned nothing, git grep's pager hid the output, and I was first told the samples folder was assets/samples when it is assets/sounds
+- What changed: I ran searches from the repo root with --no-pager and corrected the sound paths in my plan
 
 ---
 
