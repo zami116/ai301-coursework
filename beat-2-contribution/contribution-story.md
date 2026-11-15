@@ -157,18 +157,21 @@ The beat list comes from beats-metadata.json. BeatLibrary.load (engine/src/main/
 
 **Proposed Solution**
 
-Add one beat file and one registry entry, with sounds. I am not changing any Scala or TypeScript code. The pattern and sounds are my own work, as the maintainer asked.
+Add one beat file and one registry entry. I am not changing any Scala or TypeScript code. The pattern is mine, based on a tutorial and changed; the sounds are the repo's existing techno samples.
 
 **Implementation Plan**
 
-1. Add sounds for the pattern under frontend/src/assets/sounds/, or reuse existing ones.
-2. Add frontend/src/assets/beats/hip-hop/boom-bap.json, shaped like hiphop.json.
+1. Reuse the existing sounds (techno/hat.wav, techno/snare.wav, techno/kick.wav); add no new audio files.
+2. Add frontend/src/assets/beats/hip-hop/boom-bap.json, shaped like hiphop.json: 88 bpm, 16 steps, hats, snare and kick.
 3. Add {"filename": "hip-hop/boom-bap", "genre": "Hip-Hop", "label": "Boom Bap"} to frontend/src/assets/beats/beats-metadata.json.
 4. Reload the app and check that Boom Bap appears, plays, and every other genre still lists its beats.
-5. Run the repo's tests: npm run test and npm run test-vitest in frontend/, sbt testFull in engine/.
+5. Run the repo's tests: npx ng test --watch=false and npm run test-vitest in frontend/.
 
-[Record deviations here as they happen: what changed mid-build and
-why. A recorded deviation is honest work; silent drift is not.]
+**Deviations**
+
+- Planned to add my own sounds; I reused the repo's existing samples, because the maintainer's loudness advice needs LMMS exports that I did not get to in time, and I'm happy to export new one-shots if he prefers.
+- Planned sbt testFull for the engine; not run, since I changed no Scala code and no engine test reads beats-metadata.json.
+- My first draft of boom-bap.json had bpm 0, so the beat never applied and the grid showed the previous beat; setting 88 fixed it.
 
 **Toolkit**
 
@@ -179,12 +182,9 @@ why. A recorded deviation is honest work; silent drift is not.]
 
 ---
 
-## Testing Strategy
+**Testing Strategy**
 
-[What observable checks prove the fix: your reproduction steps re-run
-against the built change (before and after), and the repo's own test
-suite or checks with the outcome shown. "Tests pass" with nothing
-observable named is not a strategy.]
+Two observable checks. First, my reproduction re-run on the built change: with Genre "Hip-Hop" selected, the beat dropdown now lists "Boom Bap" after "Jul type beat" (before: only three beats), selecting it loads an 88 bpm pattern, and switching to Trap and back works. Evidence: `ls frontend/src/assets/beats/hip-hop` lists boom-bap.json, and `grep -c -i boom frontend/src/assets/beats/beats-metadata.json` prints 2 (before: 0), the filename and label lines of my entry. Second, the repo's own tests: `npm run test` (Karma) passed 92 of 92 in headless Chrome, with one failure in Edge that I opened myself (a focus-outline style test unrelated to beats), and `npm run test-vitest` passed 29 of 29 in 5 files. I did not change Scala or TypeScript, and none of these tests read beats-metadata.json, so they confirm I broke nothing; the app itself shows the feature working.
 
 **Toolkit**
 
@@ -200,19 +200,19 @@ observable named is not a strategy.]
 [A running log, added to as you work. Date each entry. What you
 built, decisions you made when you made them, wrong turns included.]
 
-**[Date]**
+**11/14/2026**
 
-[Entry]
+Boom Bap appeared in the dropdown but the grid kept the previous beat. The cause was bpm 0 in my skeleton, so the beat didn't apply. Setting 88 fixed it. I based the 16-step pattern on a boom bap tutorial video, credited in the source field, and tested with the repo's techno sounds.
 
-**[Date]**
+**11/14/2026**
 
-[Entry]
+Finished the pattern. I listened to Nas, The Notorious B.I.G. and Mobb Deep for the feel, then changed the tutorial's starting pattern: hats went from every other step to XXX_XXX_XXX_X_X_ for a busier top, and I added a kick on step 5 for weight. Tests: Karma 92 of 92 passed (headless Chrome), Vitest 29 of 29 passed. Pushed the branch to my fork.
 
 **Toolkit**
 
-- Tool:
+- Tool: Claude (chat), repo tests
 - What it produced:
-- Difficulties:
+- Difficulties: None
 - What changed:
 
 ---
