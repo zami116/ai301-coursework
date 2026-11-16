@@ -11,7 +11,7 @@ files and no evidence uploads are part of Assignment 5.
 **Student:** Zamijah Shakeur-Tompkins
 **GitHub Username:** zami116
 **Issue:** https://github.com/Babali42/DrumBeatRepo/issues/537
-**Pull Request:** [GitHub PR link, once opened]
+**Pull Request:** https://github.com/Babali42/DrumBeatRepo/pull/641
 
 One repository, built across units 5 to 8, telling the whole story of your real
 contribution. Fill it as you work, not at the end — the sections below ask for evidence that
@@ -62,10 +62,9 @@ I built issue-scout from my unit 5 skill by adding a fit profile and a search st
 
 I added Upstream rules for claims, questions and pings to my voice guide, written from what happened on #537, and installed the guard hook. My first wiring test failed: `gh issue comment --help` ran instead of being stopped, and the guard log had no hook lines. The hook only watched Bash, but Claude Code on Windows can run commands through a PowerShell tool, so I widened the matcher in settings.json and the check in check_voice.py (with Claude Code's help, and I diffed it against the course copy). The same test now stops with "no body the guard can read," and I run the manual check on drafts I post from the browser. I also wrote CLAUDE.local.md for the DrumBeatRepo clone.
 
-**Unit 11: [one line on the tool work]**
+**Unit 11: Ran plan-check and pr-precheck on my real branch**
 
-[2-4 sentences: the ship-gate and your gate manifest. What it produced
-on your real branch, what fought you, what changed because of it.]
+I did not install the ship-gate hook; I ran plan-check and pr-precheck myself against DrumBeatRepo with the live scope file. plan-check rejected my first plan (no stated cause, a test plan that did not reuse my repro, no risks section, and a comment that overstated what I made), and accepted after I rewrote all three. pr-precheck then rejected my branch because it still held the tutorial's pattern, which I had not replaced with my edited one; once I committed my version it accepted.
 
 **Unit 12: [one line on the tool work]**
 
@@ -78,7 +77,7 @@ drafted, what you did with the draft.]
 
 I started with my scout on the Path Review repo: four queries returned 51 open issues, 35 survived my filters, and all five top candidates were rejected on Maintainer alive. When I regraded #75, I found the scout's comment listing had been cut off at 15 comments and hid two collaborator replies, so those rejects were unreliable. Because my queries were pinned to one classroom repo, I took candidates from the Issue Selection site instead and graded nine issues across Altinn, MaterialX, WebDevTools, dialogporten and DrumBeatRepo. Three were accepted: Altinn #12123 and DrumBeatRepo #537 and #270. I rejected #12123 for my own reasons: Altinn Studio's README lists Docker Desktop as a prerequisite and I don't have Docker, which my rubric can't see. #270 is a standing contribution guide that isn't meant to be closed, so it wasn't a single task.
 
-I chose #537 (add a boom bap beat to DrumBeatRepo). The scout accepted it on 2026-11-03 with a moderate difficulty note: one beat file plus a metadata entry, no Docker, and it runs in a Codespace. The closed PR #557 showed me what was missing (the beat file, not just the metadata), and Babali42 answered my claim within hours with a step-by-step workflow. After I claimed, a regrade rejected it, but only on Unclaimed, because the scout counted my own claim comment as a live claim; I chose it anyway and I can explain why. It's a weak fit for my profile (the scout called it "not Python, testing or backend work"), but it is a bounded, reproducible task with a responsive maintainer. I hope to learn how a maintainer wants a contribution shaped and his DAW-to-JSON workflow for beats. Music design and production is one of my many interests, and this issue will allow me to experience the work that goes behind some music applications for when I start creating my own. Claim comment: [https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869](https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869) (posted 11/3/2026).
+I chose #537 (add a boom bap beat to DrumBeatRepo). The scout accepted it on 2026-11-03; after my scope patch it rated it moderate: one beat file plus a metadata entry, no Docker, and it runs in a Codespace. The closed PR #557 showed me what was missing (the beat file, not just the metadata), and Babali42 answered my claim within hours with a step-by-step workflow. After I claimed, a regrade rejected it, but only on Unclaimed, because the scout counted my own claim comment as a live claim; I chose it anyway and I can explain why. It's a weak fit for my profile (the scout called it "not Python, testing or backend work"), but it is a bounded, reproducible task with a responsive maintainer. I hope to learn how a maintainer wants a contribution shaped and his DAW-to-JSON workflow for beats. Music design and production is one of my many interests, and this issue will allow me to experience the work that goes behind some music applications for when I start creating my own. Claim comment: [https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869](https://github.com/Babali42/DrumBeatRepo/issues/537#issuecomment-6619304869) (posted 11/3/2026).
 
 My honest read of the scout: it held up on maintainer, repo and scope evidence, but it fell short three times on real repos. It truncated comments, it misdated a claim by about 15 months, and it can't tell my own claim from a stranger's. It also never checks setup cost like Docker, so I now read each evidence line and check setup by hand before choosing.
 
@@ -109,7 +108,7 @@ The dropdown lists only "Hip-Hop: double kick offset," "Trap" and "Jul type beat
 
 - frontend/src/assets/beats/hip-hop/: a new boom-bap.json beside hiphop.json, jul.json and trap.json
 - frontend/src/assets/beats/beats-metadata.json: a new entry with filename "hip-hop/boom-bap", genre "Hip-Hop" and a label
-- frontend/src/assets/sounds/: new or reused one-shot samples for the pattern
+- frontend/src/assets/sounds/: existing techno sounds reused, no new audio files
 - engine: BeatLibrary.scala loads the registry and HttpBeatLoader.scala loads each beat file; no engine code changes needed.
 
 **Toolkit**
@@ -174,7 +173,7 @@ Re-run my reproduction steps on the branch. Before (e1da92a): with Genre Hip-Hop
 
 - Loudness: the app has no mixer, and I only checked that the reused techno samples play, not how they sound next to the other hip-hop beats.
 - The maintainer suggested exporting new one-shot samples; I don't know yet whether reusing existing ones is acceptable to him.
-- The pattern starts from a tutorial's layout, and he asked for music made by me; I don't know whether my changes (busier hats, an extra kick) are enough for him.
+- The pattern starts from a tutorial's layout, and he asked for music made by me; I don't know whether my changes (busier hats, some extra kicks) are enough for him.
 - I have not tested what a malformed registry entry would do to the other genres, only that mine loads and the others still appear.
 
 **Deviations**
@@ -192,7 +191,7 @@ Re-run my reproduction steps on the branch. Before (e1da92a): with Genre Hip-Hop
 
 ---
 
-**Testing Strategy**
+## Testing Strategy
 
 Two observable checks. First, my reproduction re-run on the built change: with Genre "Hip-Hop" selected, the beat dropdown now lists "Boom Bap" after "Jul type beat" (before: only three beats), selecting it loads an 88 bpm pattern, and switching to Trap and back works. Evidence: `ls frontend/src/assets/beats/hip-hop` lists boom-bap.json, and `grep -c -i boom frontend/src/assets/beats/beats-metadata.json` prints 2 (before: 0), the filename and label lines of my entry. Second, the repo's own tests: `npm run test` (Karma) passed 92 of 92 in headless Chrome, with one failure in Edge that I opened myself (a focus-outline style test unrelated to beats), and `npm run test-vitest` passed 29 of 29 in 5 files. I did not change Scala or TypeScript, and none of these tests read beats-metadata.json, so they confirm I broke nothing; the app itself shows the feature working.
 
@@ -207,16 +206,13 @@ Two observable checks. First, my reproduction re-run on the built change: with G
 
 ## Implementation Notes
 
-[A running log, added to as you work. Date each entry. What you
-built, decisions you made when you made them, wrong turns included.]
-
 **11/14/2026**
 
 Boom Bap appeared in the dropdown but the grid kept the previous beat. The cause was bpm 0 in my skeleton, so the beat didn't apply. Setting 88 fixed it. I based the 16-step pattern on a boom bap tutorial video, credited in the source field, and tested with the repo's techno sounds.
 
 **11/14/2026**
 
-Finished the pattern. I listened to Nas, The Notorious B.I.G. and Mobb Deep for the feel, then changed the tutorial's starting pattern: hats went from every other step to XXX_XXX_XXX_X_X_ for a busier top, and I added a kick on step 5 for weight. Tests: Karma 92 of 92 passed (headless Chrome), Vitest 29 of 29 passed. Pushed the branch to my fork.
+Finished the pattern. I listened to Nas, The Notorious B.I.G. and Mobb Deep for the feel, then changed the tutorial's starting pattern: hats went from every other step to XXX_XXX_XXX_X_X_ for a busier top, and I added kicks on steps 5 and 13 for weight. Tests: Karma 92 of 92 passed (headless Chrome), Vitest 29 of 29 passed. Pushed the branch to my fork.
 
 **Toolkit**
 
@@ -229,7 +225,7 @@ Finished the pattern. I listened to Nas, The Notorious B.I.G. and Mobb Deep for 
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when opened]
+**PR Link:** [https://github.com/Babali42/DrumBeatRepo/pull/641](https://github.com/Babali42/DrumBeatRepo/pull/641)
 
 **PR Description:** [what the PR says; much of the content above
 adapts into it]
