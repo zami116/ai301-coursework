@@ -8,9 +8,13 @@ format criteria grade exactly that. Your course repo link is the whole submissio
 files and no evidence uploads are part of Assignment 5.
 
 **Contribution Number:** [1]
+
 **Student:** Zamijah Shakeur-Tompkins
+
 **GitHub Username:** zami116
+
 **Issue:** https://github.com/Babali42/DrumBeatRepo/issues/537
+
 **Pull Request:** https://github.com/Babali42/DrumBeatRepo/pull/641
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -66,10 +70,9 @@ I added Upstream rules for claims, questions and pings to my voice guide, writte
 
 I did not install the ship-gate hook; I ran plan-check and pr-precheck myself against DrumBeatRepo with the live scope file. plan-check rejected my first plan (no stated cause, a test plan that did not reuse my repro, no risks section, and a comment that overstated what I made), and accepted after I rewrote all three. pr-precheck then rejected my branch because it still held the tutorial's pattern, which I had not replaced with my edited one; once I committed my version it accepted.
 
-**Unit 12: [one line on the tool work]**
+**Unit 12: Re-ran pr-precheck on the open PR; no monitor built**
 
-[2-4 sentences: the PR-monitor and your playbook. What it read, what it
-drafted, what you did with the draft.]
+I did not build the PR monitor or playbook; I used my existing tools on PR #641. After opening it I re-ran pr-precheck (accept, all five checks) and read the automated CodeRabbit comment. The maintainer has not replied yet, so I have no drafts to send.
 
 ---
 
