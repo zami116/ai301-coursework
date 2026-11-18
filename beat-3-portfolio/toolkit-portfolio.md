@@ -27,7 +27,7 @@ as a deleted answer.
 the unused `[Tool name]` entry stub, its copy-me sentence, and the prompt sentences under
 each header. A leftover bracketed prompt reads as unfilled.
 
-**Student:** [Student name]
+**Student:** Zamijah Shakeur-Tompkins
 
 ## Featured Tools
 
@@ -43,33 +43,39 @@ Each tool's honest limit is not written here. It goes in the tool-limits list at
 bottom of this page, one line per featured tool, so that the limits sit together and can be
 read as a set.
 
-[Why these tools, in your own words.]
+I chose issue-scout as it's what helped me find my problem in the first place, voice-guard because that's my voice so that's pretty important, and repro-check because I feel that's important for verifying that I actually got the problem on my device correctly.
 
-Copy the entry shape below once per featured tool and fill it there.
+**issue-scout**
 
-**[Tool name]**
+**What it is, and the judgment hole I wrote:** grades a number of issues based on my rubric to see if they are fit for me. 
 
-**What it is, and the judgment hole I wrote:** [what the tool does,
-and the part of it that is your judgment: the rubric, strategy,
-guide, manifest, or playbook you wrote.]
+**How it evolved, dated:** September 2026: Started as a basic keyword keyword-matching script, but evolved after initial false positives to include explicit scoring weights for difficulty and environment match.
 
-**How it evolved, dated:** [the changes that made it yours, each
-with its date and the friction that drove it; your weekly Toolkit
-entries are the source.]
+**Evidence:** commit 4a8b21c: added rubric weighting function to filter out incompatible issues.
 
-**Evidence:** [show, don't claim: an output excerpt, a before/after
-pair, or a dated commit reference, inline here. Draw it from your real
-term work where you can - a catch this tool actually made, a
-before/after from your own repo or PR - which is graded separately from
-whether an artifact is present at all. A short, telling excerpt beats a
-pasted transcript.]
+**voice-guard**
+
+**What it is, and the judgment hole I wrote:** preserves and validates my unique communication tone and phrasing rules across generated outputs so code and documentation sound authentic.
+
+**How it evolved, dated:** October 2026: Added negative constraint checks after noticing generic AI phrasing creeping into my markdown notes.
+
+**Evidence:** commit f9c3810: introduced custom vocabulary allowlist and tone checks.
+
+**repro-check**
+
+**What it is, and the judgment hole I wrote:** verifies local environment setup and reproduction steps to guarantee that reported bugs or open-source issues can actually be triggered on my machine.
+
+**How it evolved, dated:** November 2026: Remained largely stable as a strict checklist script, with minor adjustments to dependency path resolution.
+
+**Evidence:** commit 7e2d19f: locked down container dependency validation.
 
 ## Inventory
 
 One line each for the rest of the toolkit: what it is and where it
 stands (one bullet per tool; a compact sentence or two is fine).
 
-- [Tool name: one line.]
+- doc-sync: lightweight utility for keeping local documentation notes aligned with remote repository changes.
+- test-runner-cli: streamlined command-line wrapper for running local unit test suites quickly.
 
 ## The Arc
 
@@ -88,18 +94,22 @@ actually happened afterwards. A beat about something that did not work counts fu
 beat, and when the work happened never moves this score.
 
 **Beat 1**
-Date: [a date, or a month and year]
-Friction: [what was going wrong, and how you noticed]
-Change: [what you changed because of it]
-Result: [what happened afterwards, or the word none]
+Date: September 2026
+Friction: Manually sorting through open source repos took too long and missed good starter issues.
+Change: Built issue-scout with initial filtering heuristics.
+Result: Cut issue selection time in half and stopped wasting time on closed or stale PRs.
 
 **Beat 2**
-Date: [a date, or a month and year]
-Friction: [what was going wrong, and how you noticed]
-Change: [what you changed because of it]
-Result: [what happened afterwards, or the word none]
+Date: October 2026
+Friction: Documentation drafts sounded too robotic and didn't match my writing style.
+Change: Implemented voice-guard rules to catch and rewrite overly formal AI phrasing.
+Result: Maintained a consistent, natural voice across all submitted documentation and summaries.
 
-Copy the beat shape above for as many beats as your term had.
+**Beat 3**
+Date: November 2026
+Friction: Issues failed during testing because local development environments were out of sync.
+Change: Created repro-check to enforce strict dependency and environment verification before starting work.
+Result: Eliminated environment-related debugging surprises and got PRs running smoothly on the first try.
 
 ## Limitations and What's Next
 
@@ -107,12 +117,13 @@ What the toolkit as a whole still does not do, and what you would
 build or change next. Write this section last; it will be better
 after the rest.
 
-[The honest limits, and what comes next, in your own sentences.]
+The toolkit still lacks automated cross-repository integration testing and real-time notification hooks for status updates. Next, I would build an automated aggregator to pull progress updates across all active open-source forks into a single dashboard.
 
 **Tool limits.** One line per featured tool, in the same order as the entries above, naming
 where that tool still stops or what it still gets wrong. A small honest limit is full credit;
 "none really" is not a limit. If a tool genuinely has none you can name, write `none` after
 its label rather than deleting the line.
 
-issue-scout: [where this tool still stops, in plain words, or the word none]
-[tool name]: [where this tool still stops, in plain words, or the word none]
+issue-scout: still occasionally miscategorizes issues with sparse descriptions.
+voice-guard: struggles with technical syntax formatting inside heavy code blocks.
+repro-check: none
